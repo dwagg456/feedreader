@@ -100,13 +100,18 @@ $(function() {
          * Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          */
-        var originalContent = $(".feed").html();
+        function loadSecondFeed(done){
+            firstFeedResults = $(".feed").html();
+            loadFeed(1, done);
+        };
+
         beforeEach(function(done) {
-            loadFeed(0, done);
+            loadFeed(0, loadSecondFeed(done));
         });
 
         it('updates feed content', function() {
-            expect($(".feed").html()).not.toBe(originalContent);
+            secondFeedResults = $(".feed").html();
+            expect(secondFeedResults).not.toBe(firstFeedResults);
         });
     });
 }());
